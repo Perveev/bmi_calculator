@@ -1,3 +1,4 @@
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -21,5 +22,34 @@ const kLabelTextStyle = TextStyle(
 const kNumberLabelStyle = TextStyle(
   fontSize: 50.0,
   fontWeight: FontWeight.w900,
+  color: Colors.white,
+);
+
+const kLargeButtonTextStyle = TextStyle(
+  fontSize: 25.0,
+  fontWeight: FontWeight.bold,
+  color: Colors.white,
+);
+
+const kTitleTextStyle = TextStyle(
+  fontSize: 50.0,
+  fontWeight: FontWeight.bold,
+  color: Colors.white,
+);
+
+const kResoultTextStyle = TextStyle(
+  fontSize: 22.0,
+  fontWeight: FontWeight.bold,
+  color: Colors.green,
+);
+
+const kBMITextStyle = TextStyle(
+  fontSize: 100.0,
+  fontWeight: FontWeight.bold,
+  color: Colors.white,
+);
+
+const kBodytextStyle = TextStyle(
+  fontSize: 22.0,
   color: Colors.white,
 );

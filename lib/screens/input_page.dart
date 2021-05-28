@@ -1,12 +1,15 @@
-import 'package:bmi_calculator/calculate_widget.dart';
-import 'package:bmi_calculator/reusable_card.dart';
-import 'package:bmi_calculator/round_icon_button.dart';
+import 'package:bmi_calculator/calculator_brain.dart';
+import 'package:bmi_calculator/components/calculate_widget.dart';
+import 'package:bmi_calculator/components/reusable_card.dart';
+import 'package:bmi_calculator/components/round_icon_button.dart';
+import 'package:bmi_calculator/screens/result_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'Icon_content.dart';
-import 'constants.dart';
+import '../components/Icon_content.dart';
+import '../components/buttom_button.dart';
+import '../constants.dart';
 
 enum Gender {
   male,
@@ -48,9 +51,11 @@ class _InputPageState extends State<InputPage> {
                   Expanded(
                     child: ReusableCard(
                       onPress: () {
-                        setState(() {
-                          selectedgender = Gender.male;
-                        });
+                        setState(
+                          () {
+                            selectedgender = Gender.male;
+                          },
+                        );
                       },
                       colour: selectedgender == Gender.male
                           ? kActiveCardColor
@@ -62,9 +67,11 @@ class _InputPageState extends State<InputPage> {
                   Expanded(
                     child: ReusableCard(
                       onPress: () {
-                        setState(() {
-                          selectedgender = Gender.female;
-                        });
+                        setState(
+                          () {
+                            selectedgender = Gender.female;
+                          },
+                        );
                       },
                       colour: selectedgender == Gender.female
                           ? kActiveCardColor
@@ -116,9 +123,11 @@ class _InputPageState extends State<InputPage> {
                         min: kHeightSliderMin,
                         max: kHeightSliderMax,
                         onChanged: (double newValue) {
-                          setState(() {
-                            heightUser = newValue.round();
-                          });
+                          setState(
+                            () {
+                              heightUser = newValue.round();
+                            },
+                          );
                         },
                       ),
                     ),
@@ -129,72 +138,56 @@ class _InputPageState extends State<InputPage> {
             Expanded(
               child: Row(
                 children: [
-                  /*Expanded(
-                    child: ReusableCard(
-                      colour: kActiveCardColor,
-                      cardChild: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'WEIGHT',
-                            style: kLabelTextStyle,
-                          ),
-                          Text(
-                            weightUser.toString(),
-                            style: kNumberLabelStyle,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              RoundIconButton(
-                                  icon: FontAwesomeIcons.minus,
-                                  onPress: () {
-                                    setState(() {
-                                      weightUser--;
-                                    });
-                                  }),
-                              SizedBox(
-                                width: 10.0,
-                              ),
-                              RoundIconButton(
-                                  icon: FontAwesomeIcons.plus,
-                                  onPress: () {
-                                    setState(() {
-                                      weightUser++;
-                                    });
-                                  }),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),*/
                   CalculateWidget('WEIGTH', weightUser, () {
-                    setState(() {
-                      weightUser++;
-                    });
+                    setState(
+                      () {
+                        weightUser++;
+                      },
+                    );
                   }, () {
-                    setState(() {
-                      weightUser--;
-                    });
+                    setState(
+                      () {
+                        weightUser--;
+                      },
+                    );
                   }),
-                  CalculateWidget('AGE', ageUser, () {
-                    setState(() {
-                      ageUser++;
-                    });
-                  }, () {
-                    setState(() {
-                      ageUser--;
-                    });
-                  }),
+                  CalculateWidget(
+                    'AGE',
+                    ageUser,
+                    () {
+                      setState(
+                        () {
+                          ageUser++;
+                        },
+                      );
+                    },
+                    () {
+                      setState(
+                        () {
+                          ageUser--;
+                        },
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
-            Container(
-              color: kBottomContainerColor,
-              margin: EdgeInsets.only(top: 10.0),
-              width: double.infinity,
-              height: kBottonContainerHeight,
+            ButtomButton(
+              text: 'CALCULATE',
+              onTap: () {
+                CalculatorBrain calc =
+                    CalculatorBrain(height: heightUser, weight: weightUser);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ResultsPage(
+                      bmiResult: calc.getBMI(),
+                      resultText: calc.getResult(),
+                      interpretation: calc.getInterpretation(),
+                    ),
+                  ),
+                );
+              },
             ),
           ],
         ),
