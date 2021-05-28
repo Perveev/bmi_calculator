@@ -1,15 +1,14 @@
+import 'package:bmi_calculator/calculate_widget.dart';
 import 'package:bmi_calculator/reusable_card.dart';
+import 'package:bmi_calculator/round_icon_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'Icon_content.dart';
+import 'constants.dart';
 
-
-const bottonContainerHeight = 80.0;
-const activeCardColour = Color(0xFF1D1E33);
-const inactiveCardColour = Color(0xFF111328);
-const bottomContainerColour = Color(0xFFEB1555);
-
-enum Gender{
+enum Gender {
   male,
   female,
 }
@@ -19,27 +18,19 @@ class InputPage extends StatefulWidget {
   _InputPageState createState() => _InputPageState();
 }
 
-class _InputPageState extends State<InputPage> {
-  Color maleCardColour = inactiveCardColour;
-  Color femaleCardColour = inactiveCardColour;
+class valueWrapper {
+  var value;
 
-  void updateColour(Gender selectedGender) {
-    if (selectedGender == Gender.male) {
-      if (maleCardColour == inactiveCardColour) {
-        maleCardColour = activeCardColour;
-        femaleCardColour = inactiveCardColour;
-      } else {
-        maleCardColour = inactiveCardColour;
-      }
-    } else {
-      if (femaleCardColour == inactiveCardColour) {
-        femaleCardColour = activeCardColour;
-        maleCardColour = inactiveCardColour;
-      } else {
-        femaleCardColour = inactiveCardColour;
-      }
-    }
-  }
+  valueWrapper(this.value);
+
+  int getData() => value;
+}
+
+class _InputPageState extends State<InputPage> {
+  late Gender? selectedgender = null;
+  int heightUser = 180;
+  int weightUser = 60;
+  int ageUser = 18;
 
   @override
   Widget build(BuildContext context) {
@@ -49,37 +40,37 @@ class _InputPageState extends State<InputPage> {
       ),
       body: Center(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
               child: Row(
                 children: [
                   Expanded(
-                    child: GestureDetector(
-                      onTap: () {
+                    child: ReusableCard(
+                      onPress: () {
                         setState(() {
-                          updateColour(Gender.male);
+                          selectedgender = Gender.male;
                         });
                       },
-                      child: ReusableCard(
-                        colour: maleCardColour,
-                        cardChild: IconContent(
-                            icon: Icons.featured_play_list_outlined,
-                            label: 'MALE'),
-                      ),
+                      colour: selectedgender == Gender.male
+                          ? kActiveCardColor
+                          : kInactiveCardColor,
+                      cardChild: IconContent(
+                          icon: FontAwesomeIcons.mars, label: 'MALE'),
                     ),
                   ),
                   Expanded(
-                    child: GestureDetector(
-                      onTap: () {
+                    child: ReusableCard(
+                      onPress: () {
                         setState(() {
-                          updateColour(Gender.female);
+                          selectedgender = Gender.female;
                         });
                       },
-                      child: ReusableCard(
-                        colour: femaleCardColour,
-                        cardChild:
-                            IconContent(icon: Icons.clear, label: 'FEMALE'),
-                      ),
+                      colour: selectedgender == Gender.female
+                          ? kActiveCardColor
+                          : kInactiveCardColor,
+                      cardChild:
+                          IconContent(icon: Icons.female, label: 'FEMALE'),
                     ),
                   ),
                 ],
@@ -87,36 +78,127 @@ class _InputPageState extends State<InputPage> {
             ),
             Expanded(
               child: ReusableCard(
-                colour: activeCardColour,
+                colour: kActiveCardColor,
+                cardChild: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'HEIGHT',
+                      style: kLabelTextStyle,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        Text(
+                          heightUser.toString(),
+                          style: kNumberLabelStyle,
+                        ),
+                        Text(
+                          'cm',
+                          style: kLabelTextStyle,
+                        ),
+                      ],
+                    ),
+                    SliderTheme(
+                      data: SliderTheme.of(context).copyWith(
+                        activeTrackColor: Colors.white,
+                        thumbColor: kSliderActiveColor,
+                        overlayColor: kSliderOverlayColor,
+                        thumbShape:
+                            RoundSliderThumbShape(enabledThumbRadius: 15.0),
+                        overlayShape:
+                            RoundSliderOverlayShape(overlayRadius: 30.0),
+                      ),
+                      child: Slider(
+                        value: heightUser.toDouble(),
+                        min: kHeightSliderMin,
+                        max: kHeightSliderMax,
+                        onChanged: (double newValue) {
+                          setState(() {
+                            heightUser = newValue.round();
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             Expanded(
               child: Row(
                 children: [
-                  Expanded(
+                  /*Expanded(
                     child: ReusableCard(
-                      colour: activeCardColour,
+                      colour: kActiveCardColor,
+                      cardChild: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'WEIGHT',
+                            style: kLabelTextStyle,
+                          ),
+                          Text(
+                            weightUser.toString(),
+                            style: kNumberLabelStyle,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              RoundIconButton(
+                                  icon: FontAwesomeIcons.minus,
+                                  onPress: () {
+                                    setState(() {
+                                      weightUser--;
+                                    });
+                                  }),
+                              SizedBox(
+                                width: 10.0,
+                              ),
+                              RoundIconButton(
+                                  icon: FontAwesomeIcons.plus,
+                                  onPress: () {
+                                    setState(() {
+                                      weightUser++;
+                                    });
+                                  }),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: ReusableCard(
-                      colour: activeCardColour,
-                    ),
-                  ),
+                  ),*/
+                  CalculateWidget('WEIGTH', weightUser, () {
+                    setState(() {
+                      weightUser++;
+                    });
+                  }, () {
+                    setState(() {
+                      weightUser--;
+                    });
+                  }),
+                  CalculateWidget('AGE', ageUser, () {
+                    setState(() {
+                      ageUser++;
+                    });
+                  }, () {
+                    setState(() {
+                      ageUser--;
+                    });
+                  }),
                 ],
               ),
             ),
             Container(
-              color: bottomContainerColour,
+              color: kBottomContainerColor,
               margin: EdgeInsets.only(top: 10.0),
               width: double.infinity,
-              height: bottonContainerHeight,
-            )
+              height: kBottonContainerHeight,
+            ),
           ],
         ),
       ),
     );
   }
 }
-
-//Color(0xFF1D1E33)
