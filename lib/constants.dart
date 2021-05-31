@@ -6,7 +6,7 @@ const kHeightSliderMin = 120.0;
 const kHeightSliderMax = 220.0;
 const kHeightRoundIconButton = 56.0;
 const kWidthRoundIconButton = 56.0;
-const kBottonContainerHeight = 80.0;
+const kButtonContainerHeight = 80.0;
 const kActiveCardColor = Color(0xFF1D1E33);
 const kInactiveCardColor = Color(0xFF111328);
 const kBottomContainerColor = Color(0xFFEB1555);
@@ -37,7 +37,7 @@ const kTitleTextStyle = TextStyle(
   color: Colors.white,
 );
 
-const kResoultTextStyle = TextStyle(
+const kResultTextStyle = TextStyle(
   fontSize: 22.0,
   fontWeight: FontWeight.bold,
   color: Colors.green,
@@ -49,7 +49,7 @@ const kBMITextStyle = TextStyle(
   color: Colors.white,
 );
 
-const kBodytextStyle = TextStyle(
+const kBodyTextStyle = TextStyle(
   fontSize: 22.0,
   color: Colors.white,
 );

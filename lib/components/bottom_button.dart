@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import '../constants.dart';
 
-class ButtomButton extends StatelessWidget {
+class BottomButton extends StatelessWidget {
   final Function onTap;
   final String text;
 
-  ButtomButton({required this.text, required this.onTap});
+  BottomButton({required this.text, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class ButtomButton extends StatelessWidget {
         color: kBottomContainerColor,
         margin: EdgeInsets.only(top: 10.0),
         width: double.infinity,
-        height: kBottonContainerHeight,
+        height: kButtonContainerHeight,
       ),
     );
   }

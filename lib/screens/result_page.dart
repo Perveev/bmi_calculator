@@ -1,5 +1,4 @@
-import 'package:bmi_calculator/calculator_brain.dart';
-import 'package:bmi_calculator/components/buttom_button.dart';
+import 'package:bmi_calculator/components/bottom_button.dart';
 import 'package:bmi_calculator/components/reusable_card.dart';
 import 'package:bmi_calculator/constants.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +46,7 @@ class ResultsPage extends StatelessWidget {
                 children: [
                   Text(
                     resultText,
-                    style: kResoultTextStyle,
+                    style: kResultTextStyle,
                   ),
                   Text(
                     bmiResult,
@@ -56,13 +55,13 @@ class ResultsPage extends StatelessWidget {
                   Text(
                     interpretation,
                     textAlign: TextAlign.center,
-                    style: kBodytextStyle,
+                    style: kBodyTextStyle,
                   ),
                 ],
               ),
             ),
           ),
-          ButtomButton(
+          BottomButton(
             text: 'RE-CALCULATE',
             onTap: () {
               Navigator.pop(context);
