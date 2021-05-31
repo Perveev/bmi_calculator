@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../components/Icon_content.dart';
+import '../components/icon_content.dart';
 import '../components/bottom_button.dart';
 import '../constants.dart';
 
